@@ -1,0 +1,25 @@
+# https://github.com/actions/javascript-action
+
+name: 'Report natspec smells'
+description: 'Report the natspec smells in the project'
+author: 'Yashiru <fasanol.info@gmail.com>'
+inputs:
+  github-token:
+    description: 'Set the GitHub token to have the action comment the natspec smells summary in the pull request. This token is provided by Actions, you do not need to create your own token. Optional. Default: ``'
+  working-directory:
+    description: 'The working directory containing the source files referenced in the LCOV files. Optional. Default: `./`'
+  update-comment:
+    description: 'Set to `true` to update the previous natspec smells comment if such exists. When set to `false`, a new comment is always created. Optional. Default: `false`'
+    required: false
+    default: "false"
+outputs:
+  total-smells:
+      description: 'The total smells founds by natspec-smells.'
+
+runs:
+  using: 'node20'
+  main: 'dist/main/index.js'
+  post: 'dist/post/index.js'
+branding:
+  icon: umbrella
+  color: blue
