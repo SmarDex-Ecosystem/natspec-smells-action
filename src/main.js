@@ -91,7 +91,7 @@ async function runNatspecSmells() {
             }
         };
     
-        await exec.exec('npx natspec-smells', [], options);
+        await exec.exec('npx @defi-wonderland/natspec-smells', [], options);
 
         core.info(`Total smells found: ${findingsAmount}`);
         resolve(findingsAmount);
