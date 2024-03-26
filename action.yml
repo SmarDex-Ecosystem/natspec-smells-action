@@ -7,7 +7,7 @@ inputs:
   github-token:
     description: 'Set the GitHub token to have the action comment the natspec smells summary in the pull request. This token is provided by Actions, you do not need to create your own token. Optional. Default: ``'
   working-directory:
-    description: 'The working directory containing the source files referenced in the LCOV files. Optional. Default: `./`'
+    description: 'The working directory containing the source files referenced in the natspec-smells config file. Optional. Default: `./`'
   update-comment:
     description: 'Set to `true` to update the previous natspec smells comment if such exists. When set to `false`, a new comment is always created. Optional. Default: `false`'
     required: false
