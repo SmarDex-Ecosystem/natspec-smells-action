@@ -60,6 +60,25 @@ jobs:
 _Note:_ Only the `pull_request` and `pull_request_target` events are supported.
 This action does nothing when triggered by other event types.
 
+### Example
+
+An example of message appears in the pull request with 3 errors found in the
+natspec3Problem.sol :
+
+```
+HelloWorld:constructor
+@param value is missing
+
+fileExample/natspec3Problems.sol:11
+HelloWorld:get
+@inheritdoc is missing
+
+fileExample/natspec3Problems.sol:5
+HelloWorld:_value
+@inheritdoc is missing
+
+```
+
 ## License
 
 The scripts and documentation in this project are released under the
