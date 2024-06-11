@@ -1,11 +1,11 @@
 import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as github from '@actions/github'
-import * as githubType from '@actions/github/lib/utils'
+import type * as githubType from '@actions/github/lib/utils'
 
 const events: string[] = ['pull_request', 'pull_request_target']
 
-export async function run(): Promise<void> {
+export async function run() {
   try {
     const updateComment = core.getInput('update-comment') === 'true'
     const findingsAmount = await runNatspecSmells()
@@ -19,7 +19,8 @@ export async function run(): Promise<void> {
         github.getOctokit(gitHubToken)
       const sha = github.context.payload.pull_request?.head.sha ?? ''
       const shaShort = sha.substr(0, 7)
-      const commentHeaderPrefix = `### [Natspec smells](https://github.com/defi-wonderland/natspec-smells) of commit`
+      const commentHeaderPrefix =
+        '### [Natspec smells](https://github.com/defi-wonderland/natspec-smells) of commit'
 
       const body = generateCommentBody(
         commentHeaderPrefix,
@@ -54,7 +55,7 @@ export async function run(): Promise<void> {
 async function createComment(
   body: string,
   octokit: InstanceType<typeof githubType.GitHub>
-): Promise<void> {
+) {
   core.debug('Creating a comment in the PR.')
 
   await octokit.rest.issues.createComment({
@@ -69,7 +70,7 @@ async function upsertComment(
   body: string,
   commentHeaderPrefix: string,
   octokit: InstanceType<typeof githubType.GitHub>
-): Promise<void> {
+) {
   const issueComments = await octokit.rest.issues.listComments({
     repo: github.context.repo.repo,
     owner: github.context.repo.owner,
@@ -90,12 +91,12 @@ async function upsertComment(
       body
     })
   } else {
-    core.debug(`Comment does not exist, a new comment will be created.`)
+    core.debug('Comment does not exist, a new comment will be created.')
     await createComment(body, octokit)
   }
 }
 
-async function runNatspecSmells(): Promise<number> {
+async function runNatspecSmells() {
   let findingsAmount = 0
   const options = {
     listeners: {
@@ -123,14 +124,13 @@ function generateCommentBody(
   shaShort: string,
   sha: string,
   findingsAmount: number
-): string {
+) {
   if (findingsAmount > 0) {
     return `${commentHeaderPrefix} [<code>${shaShort}</code>](${github.context.payload.pull_request?.number}/commits/${sha}) during [${github.context.workflow} #${github.context.runNumber}](../actions/runs/${github.context.runId})
-> [!WARNING]  
+> [!WARNING]
 > Natspec smells has found **${findingsAmount} problems** in the code.`
-  } else {
-    return `${commentHeaderPrefix} [<code>${shaShort}</code>](${github.context.payload.pull_request?.number}/commits/${sha}) during [${github.context.workflow} #${github.context.runNumber}](../actions/runs/${github.context.runId})
-> [!TIP]  
-> Natspec smells has not found any problems in the code.`
   }
+  return `${commentHeaderPrefix} [<code>${shaShort}</code>](${github.context.payload.pull_request?.number}/commits/${sha}) during [${github.context.workflow} #${github.context.runNumber}](../actions/runs/${github.context.runId})
+> [!TIP]
+> Natspec smells has not found any problems in the code.`
 }
