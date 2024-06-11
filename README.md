@@ -65,7 +65,7 @@ This action does nothing when triggered by other event types.
 An example of message appears in the pull request with 3 errors found in the
 natspec3Problem.sol :
 
-```bash
+```text
 HelloWorld:constructor
 @param value is missing
 
