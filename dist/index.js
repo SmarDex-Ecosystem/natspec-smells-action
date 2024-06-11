@@ -30468,7 +30468,7 @@ async function run() {
             const octokit = github.getOctokit(gitHubToken);
             const sha = github.context.payload.pull_request?.head.sha ?? '';
             const shaShort = sha.substr(0, 7);
-            const commentHeaderPrefix = `### [Natspec smells](https://github.com/defi-wonderland/natspec-smells) of commit`;
+            const commentHeaderPrefix = '### [Natspec smells](https://github.com/defi-wonderland/natspec-smells) of commit';
             const body = generateCommentBody(commentHeaderPrefix, shaShort, sha, findingsAmount);
             if (updateComment) {
                 await upsertComment(body, commentHeaderPrefix, octokit);
@@ -30518,7 +30518,7 @@ async function upsertComment(body, commentHeaderPrefix, octokit) {
         });
     }
     else {
-        core.debug(`Comment does not exist, a new comment will be created.`);
+        core.debug('Comment does not exist, a new comment will be created.');
         await createComment(body, octokit);
     }
 }
@@ -30546,14 +30546,12 @@ async function runNatspecSmells() {
 function generateCommentBody(commentHeaderPrefix, shaShort, sha, findingsAmount) {
     if (findingsAmount > 0) {
         return `${commentHeaderPrefix} [<code>${shaShort}</code>](${github.context.payload.pull_request?.number}/commits/${sha}) during [${github.context.workflow} #${github.context.runNumber}](../actions/runs/${github.context.runId})
-> [!WARNING]  
+> [!WARNING]
 > Natspec smells has found **${findingsAmount} problems** in the code.`;
     }
-    else {
-        return `${commentHeaderPrefix} [<code>${shaShort}</code>](${github.context.payload.pull_request?.number}/commits/${sha}) during [${github.context.workflow} #${github.context.runNumber}](../actions/runs/${github.context.runId})
-> [!TIP]  
+    return `${commentHeaderPrefix} [<code>${shaShort}</code>](${github.context.payload.pull_request?.number}/commits/${sha}) during [${github.context.workflow} #${github.context.runNumber}](../actions/runs/${github.context.runId})
+> [!TIP]
 > Natspec smells has not found any problems in the code.`;
-    }
 }
 
 
@@ -30589,11 +30587,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.runPost = void 0;
+const os = __importStar(__nccwpck_require__(612));
+const path = __importStar(__nccwpck_require__(9411));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const io = __importStar(__nccwpck_require__(7436));
-const os = __importStar(__nccwpck_require__(2037));
-const path = __importStar(__nccwpck_require__(1017));
 async function runPost() {
     try {
         const tmpPath = path.resolve(os.tmpdir(), github.context.action);
@@ -30717,6 +30715,22 @@ module.exports = require("net");
 
 "use strict";
 module.exports = require("node:events");
+
+/***/ }),
+
+/***/ 612:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:os");
+
+/***/ }),
+
+/***/ 9411:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:path");
 
 /***/ }),
 
