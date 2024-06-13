@@ -12,7 +12,7 @@
 	"bugs": {
 		"url": "https://github.com/Blockchain-RA2-Tech/natspec-smells-action/issues"
 	},
-	"keywords": ["actions", "node", "setup"],
+	"keywords": ["actions", "node", "solidity", "natspec", "natspec-smells"],
 	"exports": {
 		".": "./dist/index.js"
 	},
