@@ -4,13 +4,13 @@
   "version": "2.0.0",
   "author": "RA2 Tech",
   "private": true,
-  "homepage": "https://github.com/Blockchain-RA2-Tech/natspec-smells-action",
+  "homepage": "https://github.com/SmarDex-Ecosystem/natspec-smells-action",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Blockchain-RA2-Tech/natspec-smells-action"
+    "url": "git+https://github.com/SmarDex-Ecosystem/natspec-smells-action"
   },
   "bugs": {
-    "url": "https://github.com/Blockchain-RA2-Tech/natspec-smells-action/issues"
+    "url": "https://github.com/SmarDex-Ecosystem/natspec-smells-action/issues"
   },
   "keywords": [
     "actions",
