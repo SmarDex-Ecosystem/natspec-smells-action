@@ -50,7 +50,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Report natspec smells findings
-        uses: Blockchain-RA2-Tech/natspec-smells-action@v2
+        uses: SmarDex-Ecosystem/natspec-smells-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           working-directory: ./
