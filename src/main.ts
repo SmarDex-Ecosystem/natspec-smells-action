@@ -110,7 +110,7 @@ async function runNatspecSmells() {
   }
 
   try {
-    await exec.exec('npx -y @defi-wonderland/natspec-smells', [], options)
+    await exec.exec('npx @defi-wonderland/natspec-smells', [], options)
     core.info(`Total smells found: ${findingsAmount}`)
   } catch (error) {
     core.error(`Error running natspec-smells: ${(error as Error).message}`)
