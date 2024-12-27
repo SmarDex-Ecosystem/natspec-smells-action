@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as github from '@actions/github'
-import type * as githubType from '@actions/github/lib/utils'
+import type * as githubType from '@actions/github/lib/utils.ts'
 
 const events: string[] = ['pull_request', 'pull_request_target']
 
