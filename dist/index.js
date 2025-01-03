@@ -30452,7 +30452,9 @@ exports.run = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const exec = __importStar(__nccwpck_require__(1514));
 const github = __importStar(__nccwpck_require__(5438));
+const process_1 = __nccwpck_require__(7282);
 const events = ['pull_request', 'pull_request_target'];
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 async function run() {
     try {
         const updateComment = core.getInput('update-comment') === 'true';
@@ -30488,6 +30490,7 @@ async function run() {
     }
 }
 exports.run = run;
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 async function createComment(body, octokit) {
     core.debug('Creating a comment in the PR.');
     await octokit.rest.issues.createComment({
@@ -30497,6 +30500,7 @@ async function createComment(body, octokit) {
         body
     });
 }
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 async function upsertComment(body, commentHeaderPrefix, octokit) {
     const issueComments = await octokit.rest.issues.listComments({
         repo: github.context.repo.repo,
@@ -30504,7 +30508,7 @@ async function upsertComment(body, commentHeaderPrefix, octokit) {
         issue_number: github.context.payload.pull_request?.number ?? 0
     });
     const existingComment = issueComments.data.find(comment => comment.body?.includes(commentHeaderPrefix));
-    if (existingComment) {
+    if (existingComment != null) {
         core.debug(`Updating comment, id: ${existingComment.id}.`);
         await octokit.rest.issues.updateComment({
             repo: github.context.repo.repo,
@@ -30518,13 +30522,14 @@ async function upsertComment(body, commentHeaderPrefix, octokit) {
         await createComment(body, octokit);
     }
 }
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 async function runNatspecSmells() {
     let findingsAmount = 0;
     const options = {
         listeners: {
             stderr: (data) => {
                 const matches = data.toString().match(/.sol:/g);
-                if (matches) {
+                if (matches != null) {
                     findingsAmount += matches.length;
                 }
             }
@@ -30539,13 +30544,19 @@ async function runNatspecSmells() {
     }
     return findingsAmount;
 }
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function generateCommentBody(commentHeaderPrefix, shaShort, sha, findingsAmount) {
+    const pullRequest = github.context.payload.pull_request;
+    if (pullRequest == null) {
+        core.error('Error running natspec-smells: pull_request is null');
+        (0, process_1.exit)(1);
+    }
     if (findingsAmount > 0) {
-        return `${commentHeaderPrefix} [<code>${shaShort}</code>](${github.context.payload.pull_request?.number}/commits/${sha}) during [${github.context.workflow} #${github.context.runNumber}](../actions/runs/${github.context.runId})
+        return `${commentHeaderPrefix} [<code>${shaShort}</code>](${pullRequest.number}/commits/${sha}) during [${github.context.workflow} #${github.context.runNumber}](../actions/runs/${github.context.runId})
 > [!WARNING]
 > Natspec smells has found **${findingsAmount} problems** in the code.`;
     }
-    return `${commentHeaderPrefix} [<code>${shaShort}</code>](${github.context.payload.pull_request?.number}/commits/${sha}) during [${github.context.workflow} #${github.context.runNumber}](../actions/runs/${github.context.runId})
+    return `${commentHeaderPrefix} [<code>${shaShort}</code>](${pullRequest.number}/commits/${sha}) during [${github.context.workflow} #${github.context.runNumber}](../actions/runs/${github.context.runId})
 > [!TIP]
 > Natspec smells has not found any problems in the code.`;
 }
@@ -30588,6 +30599,7 @@ const path = __importStar(__nccwpck_require__(9411));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const io = __importStar(__nccwpck_require__(7436));
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 async function runPost() {
     try {
         const tmpPath = path.resolve(os.tmpdir(), github.context.action);
@@ -30767,6 +30779,14 @@ module.exports = require("path");
 
 "use strict";
 module.exports = require("perf_hooks");
+
+/***/ }),
+
+/***/ 7282:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("process");
 
 /***/ }),
 
@@ -32535,6 +32555,7 @@ const main_1 = __nccwpck_require__(399);
 const post_1 = __nccwpck_require__(7051);
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 (0, main_1.run)();
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 (0, post_1.runPost)();
 
 })();
