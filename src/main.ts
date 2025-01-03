@@ -7,7 +7,7 @@ import { exit } from 'process'
 const events: string[] = ['pull_request', 'pull_request_target']
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export async function run () {
+export async function run() {
   try {
     const updateComment = core.getInput('update-comment') === 'true'
     const findingsAmount = await runNatspecSmells()
@@ -55,7 +55,7 @@ export async function run () {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-async function createComment (
+async function createComment(
   body: string,
   octokit: InstanceType<typeof githubType.GitHub>
 ) {
@@ -70,7 +70,7 @@ async function createComment (
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-async function upsertComment (
+async function upsertComment(
   body: string,
   commentHeaderPrefix: string,
   octokit: InstanceType<typeof githubType.GitHub>
@@ -101,7 +101,7 @@ async function upsertComment (
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-async function runNatspecSmells () {
+async function runNatspecSmells() {
   let findingsAmount = 0
   const options = {
     listeners: {
@@ -125,7 +125,7 @@ async function runNatspecSmells () {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-function generateCommentBody (
+function generateCommentBody(
   commentHeaderPrefix: string,
   shaShort: string,
   sha: string,
