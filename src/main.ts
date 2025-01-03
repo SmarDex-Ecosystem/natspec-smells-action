@@ -2,11 +2,9 @@ import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as github from '@actions/github'
 import type * as githubType from '@actions/github/lib/utils'
-import { exit } from 'process'
 
 const events: string[] = ['pull_request', 'pull_request_target']
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export async function run() {
   try {
     const updateComment = core.getInput('update-comment') === 'true'
@@ -54,7 +52,6 @@ export async function run() {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 async function createComment(
   body: string,
   octokit: InstanceType<typeof githubType.GitHub>
@@ -69,7 +66,6 @@ async function createComment(
   })
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 async function upsertComment(
   body: string,
   commentHeaderPrefix: string,
@@ -85,7 +81,7 @@ async function upsertComment(
     comment.body?.includes(commentHeaderPrefix)
   )
 
-  if (existingComment != null) {
+  if (existingComment) {
     core.debug(`Updating comment, id: ${existingComment.id}.`)
 
     await octokit.rest.issues.updateComment({
@@ -100,14 +96,13 @@ async function upsertComment(
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 async function runNatspecSmells() {
   let findingsAmount = 0
   const options = {
     listeners: {
       stderr: (data: Buffer) => {
         const matches = data.toString().match(/.sol:/g)
-        if (matches != null) {
+        if (matches) {
           findingsAmount += matches.length
         }
       }
@@ -124,24 +119,18 @@ async function runNatspecSmells() {
   return findingsAmount
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function generateCommentBody(
   commentHeaderPrefix: string,
   shaShort: string,
   sha: string,
   findingsAmount: number
 ) {
-  const pullRequest = github.context.payload.pull_request
-  if (pullRequest == null) {
-    core.error('Error running natspec-smells: pull_request is null')
-    exit(1)
-  }
   if (findingsAmount > 0) {
-    return `${commentHeaderPrefix} [<code>${shaShort}</code>](${pullRequest.number}/commits/${sha}) during [${github.context.workflow} #${github.context.runNumber}](../actions/runs/${github.context.runId})
+    return `${commentHeaderPrefix} [<code>${shaShort}</code>](${github.context.payload.pull_request?.number}/commits/${sha}) during [${github.context.workflow} #${github.context.runNumber}](../actions/runs/${github.context.runId})
 > [!WARNING]
 > Natspec smells has found **${findingsAmount} problems** in the code.`
   }
-  return `${commentHeaderPrefix} [<code>${shaShort}</code>](${pullRequest.number}/commits/${sha}) during [${github.context.workflow} #${github.context.runNumber}](../actions/runs/${github.context.runId})
+  return `${commentHeaderPrefix} [<code>${shaShort}</code>](${github.context.payload.pull_request?.number}/commits/${sha}) during [${github.context.workflow} #${github.context.runNumber}](../actions/runs/${github.context.runId})
 > [!TIP]
 > Natspec smells has not found any problems in the code.`
 }
