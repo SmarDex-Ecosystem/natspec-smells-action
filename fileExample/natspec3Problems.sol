@@ -11,8 +11,4 @@ contract HelloWorld {
     function get() public view returns (string memory) {
         return _value;
     }
-
-    function get2() public view returns (string memory) {
-        return _value;
-    }
 }
