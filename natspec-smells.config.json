@@ -1,4 +1,4 @@
 {
-  "include": "fileExample/*.sol",
-  "constructorNatspec": true
+	"include": "fileExample/*.sol",
+	"constructorNatspec": true
 }

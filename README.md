@@ -43,13 +43,13 @@ on: pull_request
 name: Continuous Integration
 
 jobs:
-  natspec_smells_report:
+  natspec-smells:
     name: Generate natspec-smells report
-    needs: testing
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Report natspec smells findings
         uses: SmarDex-Ecosystem/natspec-smells-action@v2
         with:
