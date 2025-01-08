@@ -1,13 +1,11 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Solidity Natspec Smells'
+description: 'Report Solidity natspec-smells findings as a PR comment'
+author: 'RA2 Tech'
 
-# Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
-  icon: umbrella
+  icon: book
   color: blue
 
-# Define your inputs here.
 inputs:
   github-token:
     description:
@@ -26,7 +24,6 @@ inputs:
     required: false
     default: 'false'
 
-# Define your outputs here.
 outputs:
   total-smells:
     description: 'The total smells founds by natspec-smells.'
