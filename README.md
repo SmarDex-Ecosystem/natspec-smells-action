@@ -51,11 +51,17 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Report natspec smells findings
+        id: natspec-smells-action
         uses: SmarDex-Ecosystem/natspec-smells-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           working-directory: ./
           update-comment: true
+
+      # if the workflow needs to fail, add this step
+      - name: Fail on findings
+        if: ${{ steps.natspec-smells-action.outputs.total-smells > 0 }}
+        run: exit 1
 ```
 
 _Note:_ Only the `pull_request` and `pull_request_target` events are supported.
